@@ -20,46 +20,46 @@ def energy_difference(J, h, spin_to_change, configuration, size):
     sright = configuration[(spin_to_change + 1) % size]
     return 2 * h * s + 2 * J * s * (sleft + sright)
 
-def monte_carlo(n_steps, beta, J, h, configuration, return_configurations=False):
+@numba.jit(nopython = True)
+def monte_carlo_config(n_steps, beta, J, h, configuration):
+    size = len(configuration)
+    average_spins = np.zeros(n_steps)
+    configurations = np.zeros((n_steps, size))
+    current_energy = energy_ising(J, h, configuration)
+
+    for step in range(n_steps):
+        spin_to_change = np.random.randint(size)
+        dE = energy_difference(J, h, spin_to_change, configuration, size)
+
+        r = np.random.random()
+        if r < np.exp(-beta * dE):
+            configuration[spin_to_change] *= -1
+            current_energy += dE
+            
+        average_spins[step] = configuration.mean()
+        configurations[step] = configuration 
+    return current_energy, average_spins, configurations
+
+@numba.jit(nopython = True)
+def monte_carlo_noconfig(n_steps, beta, J, h, configuration):
+    size = len(configuration)
+    average_spins = np.zeros(n_steps)
+    current_energy = energy_ising(J, h, configuration)
+
+    for step in range(n_steps):
+        spin_to_change = np.random.randint(size)
+        dE = energy_difference(J, h, spin_to_change, configuration, size)
+
+        r = np.random.random()
+        if r < np.exp(-beta * dE):
+            configuration[spin_to_change] *= -1
+            current_energy += dE
+            
+        average_spins[step] = configuration.mean()
+    return current_energy, average_spins
     
-    @numba.jit(nopython = True)
-    def monte_carlo_config(n_steps, beta, J, h, configuration):
-        size = len(configuration)
-        average_spins = np.zeros(n_steps)
-        configurations = np.zeros((n_steps, size))
-        current_energy = energy_ising(J, h, configuration)
 
-        for step in range(n_steps):
-            spin_to_change = np.random.randint(size)
-            dE = energy_difference(J, h, spin_to_change, configuration, size)
-
-            r = np.random.random()
-            if r < np.exp(-beta * dE):
-                configuration[spin_to_change] *= -1
-                current_energy += dE
-                
-            average_spins[step] = configuration.mean()
-            configurations[step] = configuration 
-        return current_energy, average_spins, configurations
-    
-    @numba.jit(nopython = True)
-    def monte_carlo_noconfig(n_steps, beta, J, h, configuration):
-        size = len(configuration)
-        average_spins = np.zeros(n_steps)
-        current_energy = energy_ising(J, h, configuration)
-
-        for step in range(n_steps):
-            spin_to_change = np.random.randint(size)
-            dE = energy_difference(J, h, spin_to_change, configuration, size)
-
-            r = np.random.random()
-            if r < np.exp(-beta * dE):
-                configuration[spin_to_change] *= -1
-                current_energy += dE
-                
-            average_spins[step] = configuration.mean()
-        return current_energy, average_spins
-    
+def monte_carlo(n_steps, beta, J, h, configuration, return_configurations=False)->tuple[float, ]:
     if return_configurations:
         return monte_carlo_config(n_steps, beta, J, h, configuration)
     else:

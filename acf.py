@@ -1,6 +1,6 @@
 from ising import monte_carlo
 import numpy as np
-
+import concurrent.futures
 
 size = 1_000
 n_steps = 100_000
@@ -22,3 +22,12 @@ def calculate_acf(size=size, n_steps = n_steps, beta=beta, J=J, h=h):
     acf /= acf.max()
     acf = acf[:int(len(acf))//2]
     return acf[::size]
+
+def acf_multi(n_sim, size=size, n_steps = n_steps, beta=beta, J=J, h=h):
+    corrs = []
+    with concurrent.futures.ProcessPoolExecutor() as p:
+        futures = [p.submit(calculate_acf,size, n_steps, beta, J, h) for _ in range(n_sim)]
+        for future in concurrent.futures.as_completed(futures):
+            corrs.append(future.result())
+                
+    return np.array(corrs).mean(axis=0)
