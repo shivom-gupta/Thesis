@@ -6,3 +6,4 @@ data
 literature
 temp.ipynb
 .DS_Store
+*torch*
