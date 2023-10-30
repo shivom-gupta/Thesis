@@ -1,9 +1,9 @@
 import numpy as np
-from ising import monte_carlo_config
+from ising import monte_carlo_config, get_configuration
 
 def generate_configurations(size:int, n_steps:int, beta:float, J:float, h:float, file_name:str, path = 'data/')->None:
-    configuration = np.random.choice([-1, 1], size=size)
-    configurations = monte_carlo_config(n_steps=n_steps, beta=beta, J=J, h=h, configuration=configuration)[2]
+    configuration = get_configuration(size)
+    configurations = monte_carlo_config(n_sweeps=n_steps, beta=beta, J=J, h=h, configuration=configuration)[2]
     
     configurations = configurations.clip(0).astype(bool)
     shape = configurations.shape

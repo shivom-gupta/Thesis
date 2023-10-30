@@ -1,21 +1,12 @@
-from ising import monte_carlo_noconfig
 import numpy as np
-import concurrent.futures
-from scipy.signal import correlate
+from numba import njit, prange
 
-def calculate_acf(size, n_steps, beta, J, h):
-    configuration = np.random.choice([-1,1], size)
-    energies, magnetizations = monte_carlo_noconfig(n_steps, beta, J, h, configuration)
-    acf = correlate(magnetizations, magnetizations, 'full', 'fft')
-    acf = acf[len(acf)//2:][::size]
-    acf /= acf.max()
-    return acf
-
-def acf_multi(n_sim, size, n_steps, beta, J, h):
-    corrs = []
-    with concurrent.futures.ProcessPoolExecutor() as p:
-        futures = [p.submit(calculate_acf,size, n_steps, beta, J, h) for _ in range(n_sim)]
-        for future in concurrent.futures.wait(futures)[0]:
-            corrs.append(future.result())
-                
-    return np.array(corrs).mean(axis=0)
+@njit(parallel=True)
+def acf(series:np.ndarray, kmax:int = 1000):
+    Oi = np.mean(series)
+    Oi2 = np.mean(series**2)
+    Oipk = np.empty((kmax+1))
+    Oipk[0] = Oi2
+    for k in prange(1,kmax+1):
+        Oipk[k] = np.mean(series[:-k] * series[k:])
+    return (Oipk - Oi**2) / (Oi2 - Oi**2)
