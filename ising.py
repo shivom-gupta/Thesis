@@ -1,7 +1,7 @@
 import numpy as np
 from numba import njit
 
-def get_configuration(size):
+def init_configuration(size):
     return np.random.choice([-1, 1], size)
 
 @njit
