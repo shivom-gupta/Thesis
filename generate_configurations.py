@@ -16,7 +16,7 @@ def generate_configurations(size:int, n_steps:int, beta:float=1, J:float = 1, h:
     energies, magnetizations, configurations = monte_carlo_config(n_sweeps=n_steps, beta=beta, J=J, h=h, configuration=configuration)
     
     tau = calculate_tau(magnetizations)
-    configurations = configurations[int(6*tau):].clip(0).astype(bool)
+    configurations = configurations[int(20*tau):][::int(2*tau)].clip(0).astype(bool)
     shape = configurations.shape
     configurations = np.packbits(configurations)
     np.savez_compressed(path+file_name, configurations = configurations, shape = shape)
