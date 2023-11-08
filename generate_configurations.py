@@ -16,7 +16,7 @@ def generate_configurations(size:int, n_steps:int, beta:float=1, J:float = 1, h:
     energies, magnetizations, configurations = monte_carlo_config(n_sweeps=n_steps, beta=beta, J=J, h=h, configuration=configuration)
     
     tau = calculate_tau(magnetizations)
-    configurations = configurations[int(20*tau):][::int(2*tau)].clip(0).astype(bool)
+    configurations = configurations[int(20*tau):][::int(4*tau)].clip(0).astype(bool)
     shape = configurations.shape
     configurations = np.packbits(configurations)
     np.savez_compressed(path+file_name, configurations = configurations, shape = shape)
@@ -27,7 +27,10 @@ def read_configurations(path_to_file:str)->np.ndarray:
     files = np.load(path_to_file)
     configurations = np.unpackbits(files['configurations'])
     shape = files['shape']
-    configurations = 2*configurations.reshape(shape).astype(np.int16) - 1
+    try:
+        configurations = 2*configurations.reshape(shape).astype(np.int16) - 1
+    except:
+        configurations = 2*configurations[int(configurations.shape - np.prod(shape)):].reshape(shape).astype(np.int16) - 1
     return configurations
 
 def main():

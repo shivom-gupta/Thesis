@@ -9,6 +9,8 @@ def acf(series:np.ndarray, kmax:int = 1000):
     Oipk[0] = Oi2
     for k in prange(1,kmax+1):
         Oipk[k] = np.mean(series[:-k] * series[k:])
+        if Oipk[k] < 1e-10:
+            break
     return (Oipk - Oi**2) / (Oi2 - Oi**2)
 
 def calculate_tau(series:np.ndarray):
