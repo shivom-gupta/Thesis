@@ -19,28 +19,31 @@ def generate_configurations(size:int, n_sweeps:int, beta:float, J:float, h:float
     except KeyError:
         tau = None
     ising.monte_carlo(tau)
-    configurations = ising.configurations
-    shape = configurations.shape
-    configurations = np.packbits(configurations)
-    np.savez_compressed(path+file_name, configurations = configurations, shape = shape)
+    shape = ising.configurations.shape
+    configurations = np.packbits(ising.configurations)
+    magnetizations = ising.magnetizations
+    energies = ising.energies
+    np.savez_compressed(path+file_name, configurations = configurations, energies = energies, magnetizations = magnetizations, shape = shape)
  
     print(f'File {file_name} generated successfully')
     
-def read_configurations(path_to_file:str)->np.ndarray:
+def read_configurations(path_to_file:str)->tuple[np.ndarray, np.ndarray, np.ndarray]:
     files = np.load(path_to_file)
     configurations = np.unpackbits(files['configurations'])
     shape = files['shape']
+    energies = files['energies']
+    magnetizations = files['magnetizations']
     try:
         configurations = 2*configurations.reshape(shape).astype(np.int16) - 1
     except:
         configurations = 2*configurations[int(configurations.shape[0] - np.prod(shape)):].reshape(shape).astype(np.int16) - 1
-    return configurations
+    return configurations, energies, magnetizations
 
 def main():
     args = parser.parse_args()
     generate_configurations(args.size, args.n_sweeps, args.beta, args.J, args.H, args.file_name)
     try:
-        configurations = read_configurations('data/'+args.file_name+'.npz')
+        configurations,_, _ = read_configurations('data/'+args.file_name+'.npz')
         print('Shape of configurations created:', configurations.shape)
     except:
         print('Error reading the file')

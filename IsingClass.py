@@ -52,7 +52,9 @@ class Ising:
     def save_configurations(self, file_name, path = 'data/')->None:
         shape = self.configurations.shape
         configurations = np.packbits(self.configurations)
-        np.savez_compressed(path+file_name, configurations = configurations, shape = shape)
+        magnetizations = self.magnetizations
+        energies = self.energies
+        np.savez_compressed(path+file_name, configurations = configurations, magnetizations = magnetizations, energies = energies, shape = shape)
         
         print(f'File {file_name} generated successfully')
     
@@ -65,4 +67,6 @@ class Ising:
         except:
             configurations = 2*configurations[int(configurations.shape - np.prod(shape)):].reshape(shape).astype(np.int16) - 1
         self.configurations = configurations
+        self.magnetizations = files['magnetizations']
+        self.energies = files['energies']
         return configurations
