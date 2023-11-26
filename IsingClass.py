@@ -54,7 +54,9 @@ class Ising:
         configurations = np.packbits(self.configurations)
         magnetizations = self.magnetizations
         energies = self.energies
-        np.savez_compressed(path+file_name, configurations = configurations, magnetizations = magnetizations, energies = energies, shape = shape)
+        params = np.array([self.size, self.n_sweeps, self.beta, self.J, self.h])
+        np.savez_compressed(path+file_name, configurations = configurations, magnetizations = magnetizations,
+                            energies = energies, shape = shape, params = params)
         
         print(f'File {file_name} generated successfully')
     
@@ -69,4 +71,11 @@ class Ising:
         self.configurations = configurations
         self.magnetizations = files['magnetizations']
         self.energies = files['energies']
+        self.params = files['params']
+        self.params = {
+            'size': self.params[0],
+            'n_sweeps': self.params[1],
+            'beta': self.params[2],
+            'J': self.params[3],
+            'h': self.params[4]}
         return configurations

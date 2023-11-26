@@ -80,6 +80,9 @@ def exact_energy(beta, J, N):
 def exact_magnetization(beta, J, h):
     return (np.sinh(beta * h))/np.sqrt(np.exp(2*beta*J)*(np.sinh(2*beta*J))**2 + np.exp(-2*beta*J))
 
+def exact_heat_capacity(beta, J, L, r):
+    return (((np.tanh(beta*J))**r + (np.tanh(beta*J))**(L-r))/(1 + (np.tanh(beta*J))**L)).astype(np.half)
+
 if __name__ == "__main__":
     size = 1000
     n_sweeps = 3_000_000
