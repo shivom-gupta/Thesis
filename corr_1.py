@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def cr_1(configurations, r):
+def corr_1_slow(configurations, r):
     c = 0
     R = configurations.shape[0]
     L = configurations.shape[1]
@@ -10,7 +10,7 @@ def cr_1(configurations, r):
             c += np.sum(configurations[k, i] * configurations[k, int((i + r) % L)])
     return c / (R * L)
 
-def cr_1_optimized(configurations, r):
+def corr_1(configurations, r):
     R, L = configurations.shape
 
     shifted_indices = ((np.arange(L) + r) % L).astype(int)
