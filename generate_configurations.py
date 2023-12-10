@@ -28,23 +28,21 @@ def generate_configurations(size:int, n_sweeps:int, beta:float, J:float, h:float
  
     print(f'File {file_name} generated successfully')
     
-def read_configurations(path_to_file:str)->tuple[np.ndarray, np.ndarray, np.ndarray, dict]:
-    files = np.load(path_to_file)
-    configurations = np.unpackbits(files['configurations'])
-    shape = files['shape']
-    energies = files['energies']
-    magnetizations = files['magnetizations']
-    params = files['params']
-    params = {
-        'size': params[0],
-        'n_sweeps': params[1],
-        'beta': params[2],
-        'J': params[3],
-        'h': params[4]}
-    try:
-        configurations = 2*configurations.reshape(shape).astype(np.int16) - 1
-    except:
-        configurations = 2*configurations[int(configurations.shape[0] - np.prod(shape)):].reshape(shape).astype(np.int16) - 1
+def read_configurations(path_to_file: str) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict]:
+    with np.load(path_to_file) as files:
+        configurations = np.unpackbits(files['configurations'])
+        shape = files['shape']
+        energies = files['energies']
+        magnetizations = files['magnetizations']
+        params_array = files['params']
+    
+    params = dict(zip(['size', 'n_sweeps', 'beta', 'J', 'h'], params_array))
+    
+    expected_size = np.prod(shape)
+    configurations = configurations[-expected_size:]
+    
+    configurations = configurations.reshape(shape).astype(np.int32) * 2 - 1
+    
     return configurations, energies, magnetizations, params
 
 def main():

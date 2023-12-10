@@ -1,4 +1,5 @@
 import numpy as np
+from concurrent.futures import ProcessPoolExecutor, as_completed, ThreadPoolExecutor
 
 
 def corr_1_slow(configurations, r):
@@ -52,3 +53,39 @@ def corr_5(configurations, r):
 
 def corr_6(configurations, r):
     return corr_5(configurations, r)/corr_5(configurations, 0)
+
+def corr_function_parallel(configurations, rs, corr_function):
+    results = np.zeros(len(rs))
+    
+    with ThreadPoolExecutor() as executor:
+        futures = {executor.submit(corr_function, configurations, r): r for r in rs}
+        
+        for future in as_completed(futures):
+            r = futures[future]
+            results[np.where(rs == r)[0][0]] = future.result()
+
+    return results
+
+def worker(size, beta, corr_function, rs, preloaded_data):
+    configurations, params = preloaded_data[(size, beta)]
+    result = corr_function_parallel(configurations, rs, corr_function)
+    return size, beta, corr_function.__name__, result
+
+def parallelize_computations(sizes, betas, corr_functions, preloaded_data):
+    computed_data = {size: {} for size in sizes}
+    
+    with ProcessPoolExecutor() as executor:
+        tasks = []
+        for size in sizes:
+            rs = np.concatenate((np.arange(0, 10, 1), np.arange(10, size - 10, 10), np.arange(size - 10, size + 1, 1)))
+            for beta in betas:
+                for corr_function in corr_functions:
+                    tasks.append(executor.submit(worker, size, beta, corr_function, rs, preloaded_data))
+
+        for future in tasks:
+            size, beta, corr_name, result = future.result()
+            if beta not in computed_data[size]:
+                computed_data[size][beta] = {}
+            computed_data[size][beta][corr_name] = result
+
+    return computed_data
