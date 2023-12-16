@@ -40,11 +40,11 @@ def monte_carlo(size, n_sweeps, beta, J, h, configuration, tau, R_max, batch_siz
     exponentials = np.exp(-beta * np.array([-4, -2, 0, 2, 4]))
     batch_size = min(batch_size, n_sweeps)
     rs = np.random.random((batch_size, size)).astype(np.float32)
-    spins_to_change = np.random.randint(0, size, (batch_size, size)).astype(np.uint8)
+    spins_to_change = np.random.randint(0, size, (batch_size, size)).astype(np.int16)
     for sweep in range(n_sweeps):
         if sweep % (5*batch_size) == 0:
             rs = np.random.random((batch_size, size)).astype(np.float32)
-            spins_to_change = np.random.randint(0, size, (batch_size, size)).astype(np.uint8)
+            spins_to_change = np.random.randint(0, size, (batch_size, size)).astype(np.int16)
         for spin in range(size):
             spin_to_change = spins_to_change[sweep%batch_size, spin]
             dE = energy_difference(configuration, size, spin_to_change, J, h)
