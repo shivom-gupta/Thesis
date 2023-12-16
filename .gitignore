@@ -8,3 +8,11 @@ temp.ipynb
 .obsidian
 data
 Thesis
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+*.bbl
+*.bcf
+*.run.xml
