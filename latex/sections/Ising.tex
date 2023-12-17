@@ -1,0 +1,160 @@
+\section{Ising Model}
+\label{sec:ising}
+
+The Ising model or  Lenz-Ising model, named after the german physicists Ernst
+Ising and  Wilhelm Lenz, is a mathematical model for ferromagnetism in
+statistical mechanics. It consists of discrete variables known as spins, which
+can take on values of either +1 or -1. These spins are arranged on a lattice,
+and the model defines the interactions between these spins.
+
+The model consists of discrete variables, which represent the magnetic dipole
+moments of atomic "spins". These spins, which can be in one of two states (+1 or
+-1), are arranged in a lattice. This lattice structure repeats periodically in
+all directions, allowing each spin to interact with its neighboring spins. The
+key aspect of the model is that neighboring spins with the same orientation
+(either both +1 or both -1) have lower energy than those with opposing
+orientations. This setup allows the model to capture the fundamental behavior of
+ferromagnetic materials.
+
+One of the intriguing aspects of the Ising model is the way it balances energy
+minimization and thermal disturbance. While the system naturally tends towards a
+state of lowest energy, thermal fluctuations can disrupt this tendency, leading
+to various structural phases. This dynamic is crucial for understanding phase
+transitions in physical systems.
+
+The concept of the Ising Model dates back to 1920 when Wilhelm Lenz proposed it,
+later tackled by his student Ernst Ising. In his 1924 thesis, Ising solved the
+one-dimensional version of the model, demonstrating the absence of a phase
+transition in this case. The more complex two-dimensional square-lattice version
+remained unsolved until 1944, when Lars Onsager provided a groundbreaking
+analytic solution, marking a significant advancement in statistical mechanics.
+
+\subsection{Mathematical Formulation of the 1D Ising Model}
+The Ising Model, a theoretical construct, represents a lattice of sites, each of
+which can exist in one of two states: -1 or +1. These states are denoted as
+$\sigma_i$, where $i$ is the site index. For instance, $\sigma_i = -1$ indicates
+that the $i$-th site is in the state -1.
+
+\subsubsection{The Hamiltonian}
+The Hamiltonian of the Ising Model includes two main components: the interaction
+energy between nearest neighboring spins and the individual energy of each spin
+due to an external magnetic field. Mathematically, it is represented as:
+\begin{equation}
+  \label{eq:hamiltonian}
+  H = -J \sum_{\langle i,j \rangle} \sigma_i \sigma_j - h \sum_{i} \sigma_i
+\end{equation}
+
+Here, the first term sums the interactions of adjacent spins, denoted by
+$\langle i,j \rangle$, indicating summation over nearest neighbors. The second
+term sums the individual spin energies, with $h$ representing the external
+magnetic field's strength. The coupling constant $J$ determines the interaction
+strength between neighboring spins, being positive for ferromagnetic and
+negative for antiferromagnetic interactions. This mathematical representation is
+central to understanding the physical implications and behaviors modeled by the
+Ising Model.
+
+\subsubsection{The Partition Function}
+The partition function $Z$ is a central concept in statistical mechanics. It
+represents the sum of all possible states of a system, weighted by their
+respective Boltzmann factors. For the Ising Model, the partition function is
+given by:
+\begin{equation}
+  \label{eq:partition}
+  Z = \sum_{\{\sigma_i\}} e^{-\beta H}
+\end{equation}
+
+Here, $\beta = \frac{1}{k_B T}$, where $k_B$ is the Boltzmann constant and $T$
+is the temperature. The sum is over all possible states of the system, denoted
+by $\{\sigma_i\}$. The Boltzmann factor $e^{-\beta H}$ is a measure of the
+probability of a state occurring, with lower energy states being more probable.
+The partition function is a central concept in statistical mechanics, as it
+allows us to calculate the thermodynamic properties of a system.
+
+\subsubsection{Exact Solution of the 1D Ising Model}
+The 1D Ising Model can be solved exactly, as demonstrated by Ernst Ising in his
+1924 thesis. This solution employs the transfer matrix method, where the
+partition function is formulated as a product of matrices. The partition
+function for the 1D Ising Model is defined as:
+\begin{equation}
+  \label{eq:partition1d}
+  Z = \sum_{\{\sigma_i\}} e^{-\beta H} = \sum_{\{\sigma_i\}} \prod_{i=1}^{N-1} e^{-\beta H_i}
+\end{equation}
+where \( N \) is the number of sites on the lattice, and the Hamiltonian for the
+interaction between the \( i \)-th and \( (i+1) \)-th site is:
+\begin{equation}
+  \label{eq:hamiltonian1d}
+  H_i = -J \sigma_i \sigma_{i+1} - \frac{h}{2} (\sigma_i + \sigma_{i+1})
+\end{equation}
+
+The partition function can be expressed as a product of matrices using the
+transfer matrix method. The transfer matrix \( T \) for each pair of adjacent
+spins is given by:
+\begin{equation}
+  \label{eq:transfer1d}
+  T = \begin{pmatrix}
+    e^{\beta(J+h)} & e^{-\beta J} \\
+    e^{-\beta J} & e^{\beta(J-h)}
+  \end{pmatrix}
+\end{equation}
+
+The partition function in terms of the transfer matrix is:
+\begin{equation}
+  \label{eq:partition1dmat2}
+  Z = \sum_{\{\sigma_i\}} T^{N-1} = \text{Tr}(T^N)
+\end{equation}
+where \( \text{Tr} \) denotes the trace of the matrix. This expression shows
+that the partition function can be calculated by raising the transfer matrix to
+the power of \( N \) and taking its trace, providing a complete solution to the
+1D Ising Model.
+
+To solve this, we diagonalize the matrix \( T \). The eigenvalues \( \lambda_1
+\) and \( \lambda_2 \) of \( T \) are found by solving the characteristic
+equation, which is the determinant of \( T - \lambda I \), where \( I \) is the
+identity matrix. The characteristic equation is:
+
+\begin{equation}
+\text{det}(T - \lambda I) = \begin{vmatrix}
+    e^{\beta(J+h)} - \lambda & e^{-\beta J} \\
+    e^{-\beta J} & e^{\beta(J-h)} - \lambda
+\end{vmatrix} = 0
+\end{equation}
+
+Solving this equation gives us the eigenvalues \( \lambda_1 \) and \( \lambda_2
+\). The partition function \( Z \) can then be expressed as:
+
+\begin{equation}
+Z = \text{Tr}(T^N) = \lambda_1^N + \lambda_2^N
+\end{equation}
+
+This formulation of \( Z \) encapsulates the sum over all possible
+configurations of the spins, weighted by their Boltzmann factor \( e^{-\beta H}
+\). The eigenvalues, functions of the temperature \( \beta \), coupling constant
+\( J \), and external magnetic field \( h \), determine the system's behavior.
+
+In the thermodynamic limit, where \( N \) tends to infinity, the partition
+function is dominated by the largest eigenvalue, as the contribution from the
+smaller eigenvalue becomes negligible. This results in the final expression for
+the partition function:
+
+\begin{equation}
+Z \approx \lambda_{\text{max}}^N
+\end{equation}
+
+where \( \lambda_{\text{max}} \) is the larger of the two eigenvalues \(
+\lambda_1 \) and \( \lambda_2 \). According to the Perron-Frobenius theorem, \(
+\lambda_{\text{max}} \) is positive and real, affirming that the partition
+function \( Z \) is positive and real, a necessary condition for a physical
+system. This validates that the 1D Ising Model is not merely a mathematical
+abstraction but represents a physically realizable system.
+
+In the special case of \( h = 0 \), the eigenvalues simplify to:
+\begin{equation}
+ \lambda_1 = 2 \cosh(\beta J), \quad \lambda_2 = 2 \sinh(\beta J)
+\end{equation}
+
+These eigenvalues, especially under special conditions like \( h = 0 \), can be
+computed analytically, providing valuable insights into the thermodynamic
+properties of the system. This exact solution is a fundamental result in
+statistical mechanics, demonstrating the efficacy of the transfer matrix method
+in solving one-dimensional models.
+
