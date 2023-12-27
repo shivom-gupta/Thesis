@@ -1,41 +1,12 @@
-\section{Ising Model}
-\label{sec:ising}
+\section{Mathematical Formulation of the 1D Ising\\ Model}
+\label{sec:ising1d}
 
-The Ising model or  Lenz-Ising model, named after the german physicists Ernst
-Ising and  Wilhelm Lenz, is a mathematical model for ferromagnetism in
-statistical mechanics. It consists of discrete variables known as spins, which
-can take on values of either +1 or -1. These spins are arranged on a lattice,
-and the model defines the interactions between these spins.
-
-The model consists of discrete variables, which represent the magnetic dipole
-moments of atomic "spins". These spins, which can be in one of two states (+1 or
--1), are arranged in a lattice. This lattice structure repeats periodically in
-all directions, allowing each spin to interact with its neighboring spins. The
-key aspect of the model is that neighboring spins with the same orientation
-(either both +1 or both -1) have lower energy than those with opposing
-orientations. This setup allows the model to capture the fundamental behavior of
-ferromagnetic materials.
-
-One of the intriguing aspects of the Ising model is the way it balances energy
-minimization and thermal disturbance. While the system naturally tends towards a
-state of lowest energy, thermal fluctuations can disrupt this tendency, leading
-to various structural phases. This dynamic is crucial for understanding phase
-transitions in physical systems.
-
-The concept of the Ising Model dates back to 1920 when Wilhelm Lenz proposed it,
-later tackled by his student Ernst Ising. In his 1924 thesis, Ising solved the
-one-dimensional version of the model, demonstrating the absence of a phase
-transition in this case. The more complex two-dimensional square-lattice version
-remained unsolved until 1944, when Lars Onsager provided a groundbreaking
-analytic solution, marking a significant advancement in statistical mechanics.
-
-\subsection{Mathematical Formulation of the 1D Ising Model}
 The Ising Model, a theoretical construct, represents a lattice of sites, each of
 which can exist in one of two states: -1 or +1. These states are denoted as
 $\sigma_i$, where $i$ is the site index. For instance, $\sigma_i = -1$ indicates
 that the $i$-th site is in the state -1.
 
-\subsubsection{The Hamiltonian}
+\subsection{The Hamiltonian}
 The Hamiltonian of the Ising Model includes two main components: the interaction
 energy between nearest neighboring spins and the individual energy of each spin
 due to an external magnetic field. Mathematically, it is represented as:
@@ -53,7 +24,7 @@ negative for antiferromagnetic interactions. This mathematical representation is
 central to understanding the physical implications and behaviors modeled by the
 Ising Model.
 
-\subsubsection{The Partition Function}
+\subsection{The Partition Function}
 The partition function $Z$ is a central concept in statistical mechanics. It
 represents the sum of all possible states of a system, weighted by their
 respective Boltzmann factors. For the Ising Model, the partition function is
@@ -70,7 +41,7 @@ probability of a state occurring, with lower energy states being more probable.
 The partition function is a central concept in statistical mechanics, as it
 allows us to calculate the thermodynamic properties of a system.
 
-\subsubsection{Exact Solution of the 1D Ising Model}
+\subsection{Exact Solution of the 1D Ising Model}
 The 1D Ising Model can be solved exactly, as demonstrated by Ernst Ising in his
 1924 thesis. This solution employs the transfer matrix method, where the
 partition function is formulated as a product of matrices. The partition
@@ -138,6 +109,7 @@ the partition function:
 
 \begin{equation}
 Z \approx \lambda_{\text{max}}^N
+\label{eq:partitionmax}
 \end{equation}
 
 where \( \lambda_{\text{max}} \) is the larger of the two eigenvalues \(
@@ -158,3 +130,44 @@ properties of the system. This exact solution is a fundamental result in
 statistical mechanics, demonstrating the efficacy of the transfer matrix method
 in solving one-dimensional models.
 
+\subsection{Thermodynamic Properties of the 1D Ising Model}
+
+As discuessed in equation \ref{eq:partitionmax}, the partition function is given
+by the largest eigenvalue \( \lambda_{\text{max}} \) in the thermodynamic limit.
+Therefore, for h = 0, the partition function is given by:
+
+\begin{equation}
+Z = \lambda_{\text{max}}^N = (2 \cosh(\beta J))^N
+\label{eq:partitionh0}
+\end{equation}
+
+The free energy \( F \) is given by:
+\begin{equation}
+F = -k_B T \ln(Z) = -k_B T N \ln(2 \cosh(\beta J))
+\end{equation}
+
+The internal energy \( U \) is given by:
+\begin{equation}
+U = - \frac{\partial}{\partial \beta} \ln(Z) = - \frac{\partial}{\partial \beta} N \ln(2 \cosh(\beta J)) = -JN \tanh(\beta J)
+\end{equation}
+
+The magnetization \( M \) is given by:
+\begin{equation}
+M = - \frac{\partial}{\partial h} \ln(Z) = - \frac{\partial}{\partial h} N \ln(2 \cosh(\beta J)) = 0
+\end{equation}
+
+The heat capacity \( C \) is given by:
+\begin{equation}
+C = - \beta^2 \frac{\partial^2}{\partial \beta^2} \ln(Z) = - \beta^2 \frac{\partial^2}{\partial \beta^2} N \ln(2 \cosh(\beta J)) = k_B \beta^2 N \text{sech}^2(\beta J)
+\end{equation}
+
+The susceptibility \( \chi \) is given by:
+\begin{equation}
+\chi = \beta \frac{\partial^2}{\partial h^2} \ln(Z) = \beta \frac{\partial^2}{\partial h^2} N \ln(2 \cosh(\beta J)) = 0
+\end{equation}
+
+These thermodynamic properties are fundamental to understanding the behavior of
+the Ising Model. The heat capacity and susceptibility are both zero, indicating
+that the system is stable and does not undergo a phase transition. This is
+consistent with the physical behavior of the Ising Model, as the 1D Ising Model
+does not exhibit a phase transition.
