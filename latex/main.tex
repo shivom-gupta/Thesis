@@ -2,19 +2,20 @@
 \usepackage{amsmath}
 \usepackage{graphicx} 
 \usepackage{subcaption}
-\title{Numerically estimating the two-point correlation function in spin systems}
-\author{Prof. Dr. Wolfhard Janke, Dennis Gessert, Shivom Gupta,\\
-  \small Institut f\"ur Theoretische Physik, Universit\"at Leipzig, Germany}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage[backend=bibtex]{biblatex}
+\addbibresource{thesis.bib}
 
-
-\date{September 2023}
 \begin{document}
 
-\maketitle
-
+\input{sections/title.tex}
+\tableofcontents
+\newpage
 \input{sections/Introduction.tex}
 \input{sections/Motivation.tex}
 \input{sections/Ising.tex}
 \input{sections/monte_carlo.tex}
 
+\printbibliography
 \end{document} 

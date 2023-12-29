@@ -16,3 +16,7 @@ Thesis
 *.bbl
 *.bcf
 *.run.xml
+*.toc
+*.out
+*.blg
+*-blx.bib
