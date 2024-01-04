@@ -199,11 +199,19 @@ Based on above steps, the acceptance probability is given by:
         1 & \text{if } \Delta E \leq 0, \\
         e^{-\beta \Delta E} & \text{if } \Delta E > 0.
     \end{cases}
-    \end{equation}
+\end{equation}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/metropolis.png}
+    \caption{The Metropolis algorithm for the Ising model.}
+    \label{fig:metropolis}
+\end{figure}
 
 If the energy difference is negative, the new state is always accepted. If the
 energy difference is positive, the new state is accepted with a probability
-defined in the equation above. This ensures the proper treatment of entropic
+defined in the equation above. This is illustrated in Figure
+\ref{fig:metropolis}. This ensures the proper treatment of entropic
 contributions in thermal equilibrium. The free energy, $F = U -TS $ has to be
 minimized and not the internal energy $U$.
 
