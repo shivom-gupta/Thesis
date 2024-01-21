@@ -2,10 +2,12 @@
 \usepackage{amsmath}
 \usepackage{graphicx} 
 \usepackage{subcaption}
-\usepackage[pdfusetitle]{hyperref}
+\usepackage{hyperref}
 \usepackage{caption}
-\usepackage[backend=bibtex]{biblatex}
-\addbibresource{thesis.bib}
+\usepackage{natbib}
+\usepackage{placeins}
+\setcitestyle{numbers,square}
+\bibliographystyle{apsrev4-2-titles}
 
 \begin{document}
 
@@ -14,9 +16,8 @@
 \newpage
 \input{sections/Introduction.tex}
 \input{sections/Motivation.tex}
-\input{sections/Ising.tex}
-\input{sections/monte_carlo.tex}
-\input{sections/temporal_correlation.tex}
+\input{sections/theo_back.tex}
+\input{sections/methodology.tex}
 
-\printbibliography
+\bibliography{thesis.bib}
 \end{document} 

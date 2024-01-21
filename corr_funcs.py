@@ -41,8 +41,13 @@ def corr_4(configurations, r):
 
     sum_prod = np.sum(configurations * configurations[:, shifted_indices], axis=1)/L
     sum_sq = (np.sum(configurations, axis=1)/L)**2
-    
-    return np.sum((sum_prod - sum_sq)/(1-sum_sq)) / R
+    if np.any(sum_sq == 1):
+        corr = np.ones_like(sum_sq)
+        corr[sum_sq != 1] = (sum_prod[sum_sq != 1]- sum_sq[sum_sq!=1])/(1-sum_sq[sum_sq != 1])
+        return np.mean(corr)
+    else:
+        corr = (sum_prod - sum_sq)/(1-sum_sq)
+    return np.mean(corr)
 
 def corr_5(configurations, r):
     R, L = configurations.shape

@@ -1,10 +1,10 @@
-\section[Mathematical Formulation of the 1D Ising
+\subsection[Mathematical Formulation of the 1D Ising
 Model]{\texorpdfstring{Mathematical Formulation of the 1D
 Ising\\Model}{Mathematical Formulation of the 1D Ising Model}}
 \label{sec:ising1d}
 
-The Ising Model, a theoretical construct, represents a lattice of sites, each of
-which can exist in one of two states: -1 or +1. These states are denoted as
+The Ising Model is a theoretical construct representing a lattice of sites, each
+of which can exist in one of two states: -1 or +1. These states are denoted as
 $\sigma_i$, where $i$ is the site index. For instance, $\sigma_i = -1$ indicates
 that the $i$-th site is in the state -1.
 
@@ -24,12 +24,12 @@ magnetic field's strength. The coupling constant $J$ determines the interaction
 strength between neighboring spins, being positive for ferromagnetic and
 negative for antiferromagnetic interactions. This mathematical representation is
 central to understanding the physical implications and behaviors modeled by the
-Ising Model.
+Ising model.
 
-\subsection{The Partition Function}
+\subsubsection{The Partition Function}
 The partition function $Z$ is a central concept in statistical mechanics. It
 represents the sum of all possible states of a system, weighted by their
-respective Boltzmann factors. For the Ising Model, the partition function is
+respective Boltzmann factors. For the Ising model, the partition function is
 given by:
 \begin{equation}
   \label{eq:partition}
@@ -38,22 +38,26 @@ given by:
 
 Here, $\beta = \frac{1}{k_B T}$, where $k_B$ is the Boltzmann constant and $T$
 is the temperature. The sum is over all possible states of the system, denoted
-by $\{\sigma_i\}$. The Boltzmann factor $e^{-\beta H}$ is a measure of the
-probability of a state occurring, with lower energy states being more probable.
-The partition function is a central concept in statistical mechanics, as it
-allows us to calculate the thermodynamic properties of a system.
+by $\{\sigma_i\}$. Boltzmann factor $e^{-\beta H}$ is a measure of probability
+of a state occurring, with lower energy states being more probable. The
+partition function is a central concept in statistical mechanics
+\cite{Kardar2013} \cite{Yoshioka2007}, as it allows us to calculate the
+thermodynamic properties of a system.
 
-\subsection{Exact Solution of the 1D Ising Model}
+\subsubsection{Exact Solution of the 1D Ising Model}
 The 1D Ising Model can be solved exactly, as demonstrated by Ernst Ising in his
-1924 thesis. This solution employs the transfer matrix method, where the
-partition function is formulated as a product of matrices. The partition
-function for the 1D Ising Model is defined as:
+1924 thesis \cite{Ising1925}. In case of periodic boundary conditions, we can
+use the transfer matrix method, where partition function is formulated as a
+product of matrices. The partition function for the 1D Ising Model is then given
+by:
 \begin{equation}
   \label{eq:partition1d}
   Z = \sum_{\{\sigma_i\}} e^{-\beta H} = \sum_{\{\sigma_i\}} \prod_{i=1}^{N-1} e^{-\beta H_i}
 \end{equation}
+
 where \( N \) is the number of sites on the lattice, and the Hamiltonian for the
 interaction between the \( i \)-th and \( (i+1) \)-th site is:
+
 \begin{equation}
   \label{eq:hamiltonian1d}
   H_i = -J \sigma_i \sigma_{i+1} - \frac{h}{2} (\sigma_i + \sigma_{i+1})
@@ -77,10 +81,10 @@ The partition function in terms of the transfer matrix is:
 \end{equation}
 where \( \text{Tr} \) denotes the trace of the matrix. This expression shows
 that the partition function can be calculated by raising the transfer matrix to
-the power of \( N \) and taking its trace, providing a complete solution to the
-1D Ising Model.
+power of \( N \) and taking its trace, providing a complete solution to the 1D
+Ising model.
 
-To solve this, we diagonalize the matrix \( T \). The eigenvalues \( \lambda_1
+To solve this, we diagonalize the matrix \( T \). The Eigenvalues \( \lambda_1
 \) and \( \lambda_2 \) of \( T \) are found by solving the characteristic
 equation, which is the determinant of \( T - \lambda I \), where \( I \) is the
 identity matrix. The characteristic equation is:
@@ -114,12 +118,12 @@ Z \approx \lambda_{\text{max}}^N
 \label{eq:partitionmax}
 \end{equation}
 
-where \( \lambda_{\text{max}} \) is the larger of the two eigenvalues \(
-\lambda_1 \) and \( \lambda_2 \). According to the Perron-Frobenius theorem, \(
-\lambda_{\text{max}} \) is positive and real, affirming that the partition
-function \( Z \) is positive and real, a necessary condition for a physical
-system. This validates that the 1D Ising Model is not merely a mathematical
-abstraction but represents a physically realizable system.
+where \( \lambda_{\text{max}} \) is the larger of two eigenvalues \( \lambda_1
+\) and \( \lambda_2 \). According to the Perron-Frobenius theorem
+\cite{Pillai2005}, \( \lambda_{\text{max}} \) is positive and real, affirming
+that the partition function \( Z \) is positive and real, a necessary condition
+for a physical system. This validates that the 1D Ising Model is not merely a
+mathematical abstraction but represents a physically realizable system.
 
 In the special case of \( h = 0 \), the eigenvalues simplify to:
 \begin{equation}
@@ -132,7 +136,7 @@ properties of the system. This exact solution is a fundamental result in
 statistical mechanics, demonstrating the efficacy of the transfer matrix method
 in solving one-dimensional models.
 
-\subsection{Thermodynamic Properties of the 1D Ising Model}
+\subsubsection{Thermodynamic Properties of the 1D Ising Model}
 
 As discuessed in equation \ref{eq:partitionmax}, the partition function is given
 by the largest eigenvalue \( \lambda_{\text{max}} \) in the thermodynamic limit.
@@ -173,3 +177,4 @@ the Ising Model. The heat capacity and susceptibility are both zero, indicating
 that the system is stable and does not undergo a phase transition. This is
 consistent with the physical behavior of the Ising Model, as the 1D Ising Model
 does not exhibit a phase transition.
+

@@ -20,3 +20,5 @@ Thesis
 *.out
 *.blg
 *-blx.bib
+mainNotes.bib
+*.bst

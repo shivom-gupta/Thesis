@@ -1,0 +1,23 @@
+\section{Methodology}
+\label{sec:methodology}
+
+For the purpose of this thesis, we needed to create a dataset of consisting the
+spatial correlation between the spins of a 1D Ising model. To simulate the Ising
+model, we used Monte Carlo simulations \cite{Landau2021,Andersen2019}. The
+simulations were implemented in Python 3.10.9 \cite{Python3} using the NumPy
+library \cite{2020NumPy-Array}. To proform the Monte Carlo simulations, we used
+the Metropolis algorithm \cite{Metropolis1953} with periodic boundary conditions
+\cite{Landau2021}. 
+
+From the Monte Carlo simulations, we obtained a dataset of the spin
+configurations, their corresponding energy and magnetization at each Monte Carlo
+step. The data obtained was temporally correlated (Section :
+\ref{sec:temporal_correlation}), and we needed to remove this correlation. To do
+this, we calculated the autocorrelation function of magnetization. Using these
+correlation values, we calculated the integrated autocorrelation time
+\cite{Janke2006}. Finally, we used the integrated autocorrelation time to
+decorrelate the data by first discarding the first $20\tau_{int}$ Monte Carlo
+steps, and then only keeping every $4\tau_{int}-th$ step \cite{Chertenkov2023}.
+The decorrelated data was then used to calculate the spatial correlation
+functions (Section : \ref{sec:spatial_correlation}) which is the main focus of
+this thesis.

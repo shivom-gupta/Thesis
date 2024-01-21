@@ -1,17 +1,19 @@
-\section{Monte Carlo Simulations}
+\subsection{Monte Carlo Simulations}
+\label{sec:montecarlo}
 
 Monte Carlo methods belongs to a category of computational algorithms that
 utilize repeated random sampling to derive numerical outcomes. These methods are
-extensively employed across various fields such as physics, chemistry, and
-finance. In this thesis, Monte Carlo methods are specifically applied to
-simulate the Ising model.
+extensively employed across various fields such as physics \cite{Landau2021},
+chemistry, \cite{Andersen2019} and finance \cite{Glasserman2008}. In this
+thesis, Monte Carlo methods are specifically applied to simulate the Ising
+model.
 
-The Ising model is characterized as a stochastic system, meaning its behavior is
-inherently probabilistic rather than deterministic. In such a system, the state
-at any given moment is subject to random variation, making precise prediction
-unfeasible. This contrasts with deterministic systems, where, provided the
-initial conditions and the governing rules are known, the future state of the
-system can be accurately forecasted.
+The Ising model is characterized as a stochastic system \cite{Cinlar1975},
+meaning its behavior is inherently probabilistic rather than deterministic. In
+such a system, the state at any given moment is subject to random variation,
+making precise prediction unfeasible. This contrasts with deterministic systems,
+where, provided the initial conditions and the governing rules are known, the
+future state of the system can be accurately forecasted.
 
 In the context of the Ising model, stochasticity arises primarily from thermal
 fluctuations. These fluctuations spontaneously induce spin reversals, leading to
@@ -38,7 +40,7 @@ $\mathcal{H}$ and with canonical partition function $\mathcal{Z}$ as:
 
 where $\Omega(E)$ is the density of states at energy $E$.
 
-\subsection{Importance Sampling and Markov Chain Monte Carlo Methods}
+\subsubsection{Importance Sampling and Markov Chain Monte Carlo Methods}
 
 Importance sampling is a Monte Carlo technique that enhances the efficiency of
 simulations by reducing the variance of estimated expectation values. This
@@ -94,7 +96,7 @@ Markov chain. This approach provides an unbiased estimator
 $\overline{\mathcal{O}} $ for the expectation value \( \langle \mathcal{O}
 \rangle \), thus effectively capturing the equilibrium behavior of the system.
 
-\subsection{Local Update Algorithms}
+\subsubsection{Local Update Algorithms}
 
 The Markov chain conditions outlined above are general and can be satisfied by a
 variety of algorithms. In the context of the Ising model, the Metropolis
@@ -156,12 +158,13 @@ sampling is obtained which results in:
 where \( \Delta E = E_j - E_i \) is the energy difference between the two
 states.
 
-\subsection{Metropolis Algorithm}
+\subsubsection{Metropolis Algorithm}
 
-The Metropolis Algorithm was first introduced by Nicholas Metropolis in 1953,
-revolutionizing the simulation of stochastic systems. It has since found
-extensive applications in diverse fields, including physics, chemistry, and
-biology, with a notable impact on the study of the Ising model.
+The Metropolis Algorithm was first introduced by Nicholas Metropolis
+\cite{Metropolis1953} in 1953, revolutionizing the simulation of stochastic
+systems. It has since found extensive applications in diverse fields, including
+physics, chemistry, and biology, with a notable impact on the study of the Ising
+model.
 
 This algorithm falls under the category of Markov chain Monte Carlo (MC MC)
 methods. It generates a Markov chain, ensuring that its stationary distribution
