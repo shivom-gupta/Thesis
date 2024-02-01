@@ -3,7 +3,7 @@ __pycache__
 .vscode
 code
 literature
-temp.ipynb
+temp.*
 .DS_Store
 .obsidian
 data

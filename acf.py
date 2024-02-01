@@ -11,7 +11,12 @@ def acf(series:np.ndarray, kmax:int = 1000):
         Oipk[k] = np.mean(series[:-k] * series[k:])
         if Oipk[k] < 1e-10:
             break
-    return (Oipk - Oi**2) / (Oi2 - Oi**2)
+    denom = Oi2 - np.square(Oi)
+    denom = np.where(denom < 1e-10, 1e-10, denom)
+    corr = (Oipk - np.square(Oi))/(denom)
+    corr = corr[corr > 0]
+    corr = corr[corr < 1]
+    return corr
 
 def calculate_tau(series:np.ndarray):
     corr = acf(series)
