@@ -1,12 +1,12 @@
 \subsection{Monte Carlo Simulations}
 \label{sec:montecarlo}
 
-Monte Carlo methods belongs to a category of computational algorithms that
-utilize repeated random sampling to derive numerical outcomes. These methods are
-extensively employed across various fields such as physics \cite{Landau2021},
-chemistry, \cite{Andersen2019} and finance \cite{Glasserman2008}. In this
-thesis, Monte Carlo methods are specifically applied to simulate the Ising
-model.
+Monte Carlo methods \cite{Landau2021} belongs to a category of computational
+algorithms that utilize repeated random sampling to derive numerical outcomes.
+These methods are extensively employed across various fields such as physics
+\cite{Landau2021}, chemistry, \cite{Andersen2019} and finance
+\cite{Glasserman2008}. In this thesis, Monte Carlo methods are specifically
+applied to simulate the Ising model.
 
 The Ising model is characterized as a stochastic system \cite{Cinlar1975},
 meaning its behavior is inherently probabilistic rather than deterministic. In
@@ -42,12 +42,12 @@ where $\Omega(E)$ is the density of states at energy $E$.
 
 \subsubsection{Importance Sampling and Markov Chain Monte Carlo Methods}
 
-Importance sampling is a Monte Carlo technique that enhances the efficiency of
-simulations by reducing the variance of estimated expectation values. This
-technique involves drawing samples not randomly but in accordance with a
-specified equilibrium distribution. In many physical systems, this equilibrium
-distribution is defined by the canonical ensemble's Boltzmann weight, expressed
-as 
+Importance sampling \cite{Tokdar2009} is a Monte Carlo technique that enhances
+the efficiency of simulations by reducing the variance of estimated expectation
+values. This technique involves drawing samples not randomly but in accordance
+with a specified equilibrium distribution. In many physical systems, this
+equilibrium distribution is defined by the canonical ensemble's Boltzmann
+weight, expressed as 
 
 \begin{equation}
     \mathcal{P}^{eq}_i \equiv \mathcal{P}^{eq}(\sigma_i) = \frac{e^{-\beta H(\sigma_i)}}{Z}
@@ -55,15 +55,15 @@ as
 although the principle of importance sampling is not restricted to this
 particular form.
 
-In the context of Markov Chain Monte Carlo (MCMC) methods, a Markov chain is
-established to select a microstate \( \sigma_i \) according to the given
-equilibrium distribution. A Markov chain is characterized by its transition
-probabilities \( W_{ij} \equiv W(\sigma_i \rightarrow \sigma_j) \), which
-dictate the likelihood of a system evolving from one microstate \( \sigma_i \)
-to another \( \sigma_j \). This evolution is subject to the condition that the
-probability depends only on the current state \( \sigma_i \) and not on the
-entire history of the system's trajectory, rendering the process almost local in
-time.
+In the context of Markov Chain Monte Carlo (MCMC) methods \cite{Brooks1998}, a
+Markov chain is established to select a microstate \( \sigma_i \) according to
+the given equilibrium distribution. A Markov chain is characterized by its
+transition probabilities \( W_{ij} \equiv W(\sigma_i \rightarrow \sigma_j) \),
+which dictate the likelihood of a system evolving from one microstate \(
+\sigma_i \) to another \( \sigma_j \). This evolution is subject to the
+condition that the probability depends only on the current state \( \sigma_i \)
+and not on the entire history of the system's trajectory, rendering the process
+almost local in time.
 
 For MCMC algorithms to accurately reflect the equilibrium distribution, the
 transition probability \( W_{ij} \) must satisfy three conditions:
@@ -99,15 +99,17 @@ $\overline{\mathcal{O}} $ for the expectation value \( \langle \mathcal{O}
 \subsubsection{Local Update Algorithms}
 
 The Markov chain conditions outlined above are general and can be satisfied by a
-variety of algorithms. In the context of the Ising model, the Metropolis
-algorithm is a widely used local update algorithm that satisfies the conditions
-and is therefore suitable for Monte Carlo simulations.
+variety of algorithms \cite{Metropolis1953,Wolff1989,Glauber1963}. In the
+context of the Ising model, the Metropolis algorithm\cite{Metropolis1953} is a
+widely used local update algorithm that satisfies the conditions and is
+therefore suitable for Monte Carlo simulations.
 
 Local update algorithms are characterized by their ability to update the system
 by changing only a small portion of the lattice. This is in contrast to global
-update algorithms, which require the entire lattice to be updated at each step.
-Local update algorithms are more efficient than global update algorithms, as
-they require less computational resources to simulate the system.
+update algorithms \cite{Wolff1989}, which require the entire lattice to be
+updated at each step. Local update algorithms are more efficient than global
+update algorithms, as they require less computational resources to simulate the
+system.
 
 The selection of a local update algorithm is not arbitrary. The algorithm must
 satisfy the detailed balance condition, which is a necessary condition for
@@ -167,11 +169,11 @@ physics, chemistry, and biology, with a notable impact on the study of the Ising
 model.
 
 This algorithm falls under the category of Markov chain Monte Carlo (MC MC)
-methods. It generates a Markov chain, ensuring that its stationary distribution
-aligns with the target probability distribution. In the Ising model, this
-entails creating a sequence of spin configurations, each derived from its
-predecessor, converging towards the Boltzmann distribution: the equilibrium
-probability distribution for the model.
+\cite{Brooks1998} methods. It generates a Markov chain, ensuring that its
+stationary distribution aligns with the target probability distribution. In the
+Ising model, this entails creating a sequence of spin configurations, each
+derived from its predecessor, converging towards the Boltzmann distribution: the
+equilibrium probability distribution for the model.
 
 The Metropolis algorithm operates on a rejection-based principle. It involves
 the following steps:

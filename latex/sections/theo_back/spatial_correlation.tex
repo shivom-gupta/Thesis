@@ -1,2 +1,54 @@
 \subsection{Spatial Correlation}
 \label{sec:spatial_correlation}
+
+Spatial correlation is the distance over which the correlation between two
+points in a random field is significant. In context of the an ising model, it is
+the distance over which spins are correlated and measures the size of the
+domains in the system. The correlation between two spins $\sigma_i$ and
+$\sigma_j$ can be measured by two point correlation function $G(i,j)$ defined
+as:
+
+\begin{equation}
+  G(i,j) = \langle \sigma_i \sigma_j \rangle - \langle \sigma_i \rangle \langle \sigma_j \rangle = \langle \sigma_i \sigma_{i+r} \rangle - \langle \sigma_i \rangle \langle \sigma_{i+r} \rangle
+\end{equation}
+
+where $r = |i-j|$ is the distance between the two spins. The correlation length
+$\xi$ is defined as the distance at which the correlation function decays to
+zero. In the case of the Ising model when $|r|>>1$, the correlation function is
+given by $G(i, i+r) = r^{\kappa} e^{-r/\xi}$ where the exponent $\kappa$ depends
+on the dimensionality of the system and on whether one studies ordered or
+disordered systems.
+
+The correlation between two neighbouring spins is easier to measure. To do so,
+we differentiate the partition function with respect to $\beta J$ and obtain:
+
+\begin{align}
+  \frac{\partial Z}{\partial (\beta J)} &= \frac{\partial}{\partial (\beta J)} \textbf{Tr}\left(e^{-\beta H}\right) = \sum_{i=0}^{N-1} \textbf{Tr}\left(e^{-\beta H}\right) \nonumber \\
+  \implies \frac{\partial Z}{Z \partial (\beta J)} &= N \langle \sigma_i \sigma_{i+1} \rangle \\
+  \implies \langle \sigma_i \sigma_{i+1} \rangle &= \frac{1}{N} \frac{\partial Z}{\partial (\beta J)} \nonumber
+\end{align}
+
+Using the partition function from \eqref{eq:partitionh0} for $h = 0$ and the
+expression for the derivative of the partition function from equation above, we
+obtain the following expression for the correlation between two neighbouring
+spins:
+
+\begin{align}
+  \begin{split}  
+    \langle \sigma_i \sigma_{i+1} \rangle &= \frac{1}{N} \frac{N (2 \cosh(\beta J))^{N-2} \times 2 \sinh(\beta J)}{(2 \cosh(\beta J))^N} \\
+    &= \tanh(\beta J)
+  \end{split}
+\end{align}
+
+To generalize this expression for the correlation between two spins separated by
+a distance $r$, we use the fact that $\langle \sigma_i \rangle^2 = 1$. We then
+obtain:
+
+\begin{align}
+  \begin{split}
+    \langle \sigma_i \sigma_{i+r} \rangle &= \langle \sigma_i \sigma_{i+1} \sigma_{i+1} \sigma_{i+2} \sigma_{i+2} \dots \sigma_{i+r} \rangle \\
+    &= \langle \sigma_i \sigma_{i+1} \rangle \langle \sigma_{i+1} \sigma_{i+2} \rangle \dots \langle \sigma_{i+r-1} \sigma_{i+r} \rangle \\
+    &= \langle \sigma_i \sigma_{i+1} \rangle^r \\
+    &= \tanh^r(\beta J)
+  \end{split}
+\end{align}

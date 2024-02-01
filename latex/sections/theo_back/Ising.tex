@@ -52,20 +52,32 @@ product of matrices. The partition function for the 1D Ising Model is then given
 by:
 \begin{equation}
   \label{eq:partition1d}
-  Z = \sum_{\{\sigma_i\}} e^{-\beta H} = \sum_{\{\sigma_i\}} \prod_{i=1}^{N-1} e^{-\beta H_i}
+  Z = \sum_{\{\sigma_i\}} e^{-\beta \textbf{H}} = \sum_{\{\sigma_i\}} e^{-\beta \sum_{i=1}^{N-1} H_i} = \sum_{\{\sigma_i\}} \prod_{i=1}^{N-1} e^{-\beta H_i}
 \end{equation}
 
-where \( N \) is the number of sites on the lattice, and the Hamiltonian for the
-interaction between the \( i \)-th and \( (i+1) \)-th site is:
+where \( N \) is the number of sites on the lattice. Since we are considering
+periodic boundary conditions, the Hamiltonian \( H \) is from equation
+\ref{eq:hamiltonian} for each pair of adjacent spins is given by:
 
 \begin{equation}
   \label{eq:hamiltonian1d}
-  H_i = -J \sigma_i \sigma_{i+1} - \frac{h}{2} (\sigma_i + \sigma_{i+1})
+  H = -J \sum_{i=0}^{N-1}\sigma_i \sigma_{i+1} - \frac{h}{2} \sum_{i=0}^{N-1}(\sigma_i + \sigma_{i+1})
 \end{equation}
 
 The partition function can be expressed as a product of matrices using the
-transfer matrix method. The transfer matrix \( T \) for each pair of adjacent
-spins is given by:
+transfer matrix method. The transfer matrix \( T \) is a \( 2 \times 2 \) matrix
+that represents the Boltzmann factor for a pair of adjacent spins with elements
+$T_{1,1}, T_{1,-1}, T_{-1,1}, T_{-1,-1}$. Then we set an element of the matrix
+as:
+
+\begin{equation}
+  \label{eq:transfer_element}
+  T_{m,n} = e^{\beta J m n + \frac{\beta h}{2}\left(m+n\right)}
+\end{equation}
+
+where \( m \) and \( n \) are the states of the two spins. The transfer matrix
+then becomes:
+
 \begin{equation}
   \label{eq:transfer1d}
   T = \begin{pmatrix}
@@ -74,12 +86,14 @@ spins is given by:
   \end{pmatrix}
 \end{equation}
 
-The partition function in terms of the transfer matrix is:
+The partition function in terms of the transfer matrix is given by:
+
 \begin{equation}
   \label{eq:partition1dmat2}
   Z = \sum_{\{\sigma_i\}} T^{N-1} = \text{Tr}(T^N)
 \end{equation}
-where \( \text{Tr} \) denotes the trace of the matrix. This expression shows
+
+where \( \text{Tr}( . ) \) denotes the trace of the matrix. This expression shows
 that the partition function can be calculated by raising the transfer matrix to
 power of \( N \) and taking its trace, providing a complete solution to the 1D
 Ising model.
@@ -108,6 +122,22 @@ configurations of the spins, weighted by their Boltzmann factor \( e^{-\beta H}
 \). The eigenvalues, functions of the temperature \( \beta \), coupling constant
 \( J \), and external magnetic field \( h \), determine the system's behavior.
 
+Using a computer program like SymPy \cite{SymPy}, we can compute the eigenvalues
+\( \lambda_1 \) and \( \lambda_2 \) as functions of \( \beta \), \( J \), and \(
+h \). These eigenvalues are given by:
+
+\begin{align}
+  \lambda_1 &= \frac{1}{2}e^{\beta (J - h)} + \frac{1}{2}e^{\beta (J + h)} + \sqrt{(e^{\beta (J - h)} + e^{\beta (J + h)})^2 - 8 \sinh(2 J \beta)}/2 \\
+  \lambda_2 &= \frac{1}{2}e^{\beta (J - h)} + \frac{1}{2}e^{\beta (J + h)} -\sqrt{(e^{\beta (J - h)} + e^{\beta (J + h)})^2 - 8 \sinh(2 J \beta)}/2  
+\end{align}
+
+Simplifying these expressions, we get:
+
+\begin{align}
+  \lambda_1 &= e^{\beta J} \cosh(h\beta) + \sqrt{e^{2\beta J} \cosh^2(h\beta) - 2 \sinh(2\beta J)} \\
+  \lambda_2 &= e^{\beta J} \cosh(h\beta) - \sqrt{e^{2\beta J} \cosh^2(h\beta) - 2 \sinh(2\beta J)}
+\end{align}
+
 In the thermodynamic limit, where \( N \) tends to infinity, the partition
 function is dominated by the largest eigenvalue, as the contribution from the
 smaller eigenvalue becomes negligible. This results in the final expression for
@@ -128,6 +158,7 @@ mathematical abstraction but represents a physically realizable system.
 In the special case of \( h = 0 \), the eigenvalues simplify to:
 \begin{equation}
  \lambda_1 = 2 \cosh(\beta J), \quad \lambda_2 = 2 \sinh(\beta J)
+ \label{eq:eigenvalues}
 \end{equation}
 
 These eigenvalues, especially under special conditions like \( h = 0 \), can be
