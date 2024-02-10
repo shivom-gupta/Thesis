@@ -25,6 +25,8 @@ def monte_carlo(size, n_sweeps, beta, J, h, configuration, tau, R_max, batch_siz
     if tau is not None:
         if R_max is None:
             R_max = int(int(n_sweeps-20*tau)/int(4*tau))
+            if R_max < 0:
+                R_max = 1000
         else:
             R_max = R_max
         n_sweeps = int(4 * tau * R_max + 20 * tau)

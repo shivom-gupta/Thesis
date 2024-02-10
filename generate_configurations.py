@@ -18,7 +18,7 @@ def generate_configurations(size:int, n_sweeps:int, beta:float, J:float, h:float
         tau = taus[f'{beta:g}']
     except KeyError:
         tau = None
-    ising.monte_carlo(tau)
+    ising.monte_carlo(tau, 10_000)
     shape = ising.configurations.shape
     configurations = np.packbits(ising.configurations)
     magnetizations = ising.magnetizations
